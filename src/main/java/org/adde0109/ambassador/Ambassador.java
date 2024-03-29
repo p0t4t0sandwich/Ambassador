@@ -46,7 +46,7 @@ import static com.velocitypowered.proxy.protocol.packet.brigadier.ArgumentIdenti
 public class Ambassador {
 
   //Don't forget to update checkCompatibleVersion() when changing this value
-  private static final String minVelocityVersion = "velocity-3.2.0-SNAPSHOT-266";
+  private static final String minVelocityVersion = "velocity-3.2.0-SNAPSHOT-330";
 
   public ProxyServer server;
   public final Logger logger;
@@ -75,8 +75,8 @@ public class Ambassador {
   boolean checkCompatibleVersion() {
     //Update this when changing minVelocityVersion
     try {
-      MinecraftConnection.class.getDeclaredMethod("setActiveSessionHandler", StateRegistry.class);
-    } catch (NoSuchMethodException e) {
+      Class.forName("com.velocitypowered.proxy.protocol.packet.DisconnectPacket");
+    } catch (ClassNotFoundException e) {
       return false;
     }
     return true;
