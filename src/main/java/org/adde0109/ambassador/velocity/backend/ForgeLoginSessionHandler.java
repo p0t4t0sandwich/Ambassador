@@ -6,9 +6,9 @@ import com.velocitypowered.proxy.connection.MinecraftSessionHandler;
 import com.velocitypowered.proxy.connection.backend.*;
 import com.velocitypowered.proxy.connection.client.ConnectedPlayer;
 import com.velocitypowered.proxy.protocol.MinecraftPacket;
-import com.velocitypowered.proxy.protocol.packet.Disconnect;
-import com.velocitypowered.proxy.protocol.packet.LoginPluginMessage;
-import com.velocitypowered.proxy.protocol.packet.ServerLoginSuccess;
+import com.velocitypowered.proxy.protocol.packet.DisconnectPacket;
+import com.velocitypowered.proxy.protocol.packet.LoginPluginMessagePacket;
+import com.velocitypowered.proxy.protocol.packet.ServerLoginSuccessPacket;
 import com.velocitypowered.proxy.util.except.QuietRuntimeException;
 import io.netty.buffer.Unpooled;
 import org.adde0109.ambassador.forge.*;
@@ -26,7 +26,7 @@ public class ForgeLoginSessionHandler implements MinecraftSessionHandler {
   }
 
   @Override
-  public boolean handle(LoginPluginMessage packet) {
+  public boolean handle(LoginPluginMessagePacket packet) {
     if (packet.getChannel().equals("fml:loginwrapper")) {
       if (serverConnection.getPhase() == BackendConnectionPhases.UNKNOWN) {
         VelocityForgeBackendConnectionPhase.NOT_STARTED.handle(serverConnection,serverConnection.getPlayer(),packet);
@@ -39,7 +39,7 @@ public class ForgeLoginSessionHandler implements MinecraftSessionHandler {
   }
 
   @Override
-  public boolean handle(ServerLoginSuccess packet) {
+  public boolean handle(ServerLoginSuccessPacket packet) {
     if ((serverConnection.getPhase() instanceof VelocityForgeBackendConnectionPhase phase)) {
       phase.onLoginSuccess(serverConnection,serverConnection.getPlayer());
     }
@@ -65,7 +65,7 @@ public class ForgeLoginSessionHandler implements MinecraftSessionHandler {
 
 
   @Override
-  public boolean handle(Disconnect packet) {
+  public boolean handle(DisconnectPacket packet) {
     if (!serverConnection.getPlayer().getPhase().consideredComplete()) {
       serverConnection.getPlayer().handleConnectionException(serverConnection.getServer(), packet, false);
       return true;

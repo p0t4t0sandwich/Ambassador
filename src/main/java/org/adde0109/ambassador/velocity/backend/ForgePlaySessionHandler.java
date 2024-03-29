@@ -4,7 +4,7 @@ import com.velocitypowered.proxy.connection.MinecraftSessionHandler;
 import com.velocitypowered.proxy.connection.backend.TransitionSessionHandler;
 import com.velocitypowered.proxy.connection.backend.VelocityServerConnection;
 import com.velocitypowered.proxy.protocol.MinecraftPacket;
-import com.velocitypowered.proxy.protocol.packet.JoinGame;
+import com.velocitypowered.proxy.protocol.packet.JoinGamePacket;
 import org.adde0109.ambassador.forge.VelocityForgeClientConnectionPhase;
 
 public class ForgePlaySessionHandler implements MinecraftSessionHandler {
@@ -18,7 +18,7 @@ public class ForgePlaySessionHandler implements MinecraftSessionHandler {
   }
 
   @Override
-  public boolean handle(JoinGame packet) {
+  public boolean handle(JoinGamePacket packet) {
     if (serverConnection.getPlayer().getPhase() instanceof VelocityForgeClientConnectionPhase clientPhase) {
       serverConnection.getPlayer().setPhase(VelocityForgeClientConnectionPhase.RESETTABLE);
     }

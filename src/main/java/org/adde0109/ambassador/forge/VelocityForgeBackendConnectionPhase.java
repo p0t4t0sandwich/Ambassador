@@ -7,9 +7,9 @@ import com.velocitypowered.proxy.connection.client.ConnectedPlayer;
 import com.velocitypowered.proxy.network.Connections;
 import com.velocitypowered.proxy.protocol.ProtocolUtils;
 import com.velocitypowered.proxy.protocol.StateRegistry;
-import com.velocitypowered.proxy.protocol.packet.AvailableCommands;
-import com.velocitypowered.proxy.protocol.packet.LoginPluginMessage;
-import com.velocitypowered.proxy.protocol.packet.PluginMessage;
+import com.velocitypowered.proxy.protocol.packet.AvailableCommandsPacket;
+import com.velocitypowered.proxy.protocol.packet.LoginPluginMessagePacket;
+import com.velocitypowered.proxy.protocol.packet.PluginMessagePacket;
 import io.netty.buffer.ByteBuf;
 import org.adde0109.ambassador.forge.pipeline.CommandDecoderErrorCatcher;
 import org.adde0109.ambassador.forge.pipeline.ForgeLoginWrapperDecoder;
@@ -59,7 +59,7 @@ public enum VelocityForgeBackendConnectionPhase implements BackendConnectionPhas
   VelocityForgeBackendConnectionPhase() {
   }
 
-  public void handle(VelocityServerConnection server, ConnectedPlayer player, LoginPluginMessage message) {
+  public void handle(VelocityServerConnection server, ConnectedPlayer player, LoginPluginMessagePacket message) {
 
     VelocityForgeBackendConnectionPhase newPhase = getNewPhase(server,message);
 
@@ -97,7 +97,7 @@ public enum VelocityForgeBackendConnectionPhase implements BackendConnectionPhas
   }
 
   private VelocityForgeBackendConnectionPhase getNewPhase(VelocityServerConnection serverConnection,
-                                                       LoginPluginMessage packet) {
+                                                       LoginPluginMessagePacket packet) {
     VelocityForgeBackendConnectionPhase phaseToTransitionTo = nextPhase();
     if (phaseToTransitionTo != this) {
       phaseToTransitionTo.onTransitionToNewPhase(serverConnection);
@@ -106,9 +106,9 @@ public enum VelocityForgeBackendConnectionPhase implements BackendConnectionPhas
   }
 
   @Override
-  public boolean handle(VelocityServerConnection server, ConnectedPlayer player, PluginMessage message) {
+  public boolean handle(VelocityServerConnection server, ConnectedPlayer player, PluginMessagePacket message) {
     if (message.getChannel().equals("ambassador:commands")) {
-      AvailableCommands packet = new AvailableCommands();
+      AvailableCommandsPacket packet = new AvailableCommandsPacket();
       packet.decode(message.content(), ProtocolUtils.Direction.CLIENTBOUND,server.getConnection().getProtocolVersion());
       server.getConnection().getActiveSessionHandler().handle(packet);
       return true;

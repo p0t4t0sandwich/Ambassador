@@ -3,7 +3,7 @@ package org.adde0109.ambassador.forge.packet;
 import com.velocitypowered.api.proxy.messages.ChannelIdentifier;
 import com.velocitypowered.api.proxy.messages.MinecraftChannelIdentifier;
 import com.velocitypowered.proxy.protocol.ProtocolUtils;
-import com.velocitypowered.proxy.protocol.packet.LoginPluginResponse;
+import com.velocitypowered.proxy.protocol.packet.LoginPluginResponsePacket;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 
@@ -31,7 +31,7 @@ public class ModListReplyPacket implements IForgeLoginWrapperPacket {
     this.success = success;
   }
 
-  public static ModListReplyPacket read(LoginPluginResponse msg) {
+  public static ModListReplyPacket read(LoginPluginResponsePacket msg) {
     ByteBuf input = msg.content();
 
     List<String> mods = new ArrayList<>();
@@ -54,7 +54,7 @@ public class ModListReplyPacket implements IForgeLoginWrapperPacket {
   }
 
   @Override
-  public LoginPluginResponse encode() {
+  public LoginPluginResponsePacket encode() {
     ByteBuf buf = Unpooled.buffer();
 
     ProtocolUtils.writeVarInt(buf, 2);
@@ -79,7 +79,7 @@ public class ModListReplyPacket implements IForgeLoginWrapperPacket {
     ProtocolUtils.writeVarInt(output, buf.readableBytes());
     output.writeBytes(buf);
 
-    return new LoginPluginResponse(id, true, output);
+    return new LoginPluginResponsePacket(id, true, output);
   }
 
   @Override

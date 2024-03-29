@@ -1,7 +1,7 @@
 package org.adde0109.ambassador.forge.pipeline;
 
 import com.velocitypowered.proxy.protocol.ProtocolUtils;
-import com.velocitypowered.proxy.protocol.packet.LoginPluginResponse;
+import com.velocitypowered.proxy.protocol.packet.LoginPluginResponsePacket;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageDecoder;
@@ -11,12 +11,12 @@ import org.adde0109.ambassador.forge.packet.ModListReplyPacket;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ForgeLoginWrapperDecoder extends MessageToMessageDecoder<LoginPluginResponse> {
+public class ForgeLoginWrapperDecoder extends MessageToMessageDecoder<LoginPluginResponsePacket> {
 
   private final List<Integer> loginWrapperIDs = new ArrayList<>();
 
   @Override
-  protected void decode(ChannelHandlerContext ctx, LoginPluginResponse msg, List<Object> out) throws Exception {
+  protected void decode(ChannelHandlerContext ctx, LoginPluginResponsePacket msg, List<Object> out) throws Exception {
     ByteBuf buf = msg.content();
     if (!loginWrapperIDs.remove((Integer) msg.getId())) {
       out.add(msg.retain());

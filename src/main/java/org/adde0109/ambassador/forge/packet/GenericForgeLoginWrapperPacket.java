@@ -1,6 +1,6 @@
 package org.adde0109.ambassador.forge.packet;
 
-import com.velocitypowered.proxy.protocol.packet.LoginPluginResponse;
+import com.velocitypowered.proxy.protocol.packet.LoginPluginResponsePacket;
 import com.velocitypowered.proxy.protocol.util.DeferredByteBufHolder;
 import io.netty.buffer.ByteBuf;
 
@@ -15,8 +15,8 @@ public class GenericForgeLoginWrapperPacket extends DeferredByteBufHolder implem
   }
 
   @Override
-  public LoginPluginResponse encode() {
-    return new LoginPluginResponse(id, true, content());
+  public LoginPluginResponsePacket encode() {
+    return new LoginPluginResponsePacket(id, true, content());
   }
 
   @Override
