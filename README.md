@@ -3,7 +3,8 @@
 This is a Velocity plugin that makes it possible to host a modern Forge server behind a Velocity proxy!
 
 Unlike other solutions, this plugin does not require any special modifications to the backend server nor the client. (The player doesn't need to do anything)
-
+## Only for 1.13-1.20.1
+Velocity has now added built-in support for newer mc versions and therefore don't need Ambassador. You might still need PCF mod on the server-side, for more info please visit: https://github.com/adde0109/Proxy-Compatible-Forge
 ## How to get started:
 1. Download and install this plugin to your proxy.
 2. After starting the server, configure the plugin it to your liking using the config file found in the folder "Ambassador".
